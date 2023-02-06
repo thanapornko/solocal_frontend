@@ -1,9 +1,10 @@
 import { useState } from "react";
 import useLayout from "../hooks/useLayout";
 import validateRegister from "../validators/validate-register";
+import * as authApi from "../api/auth-api";
 
 const initialInput = {
-  name: "",
+  username: "",
   email: "",
   password: "",
   confirmPassword: ""
@@ -18,15 +19,21 @@ export default function RegisterPage() {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmitForm = e => {
-    e.preventDefault();
-    const result = validateRegister(input);
-    // console.dir(error);
-    if (result) {
-      setError(result);
-    } else {
-      setError({});
-    }
+  const handleSubmitForm = async e => {
+    try {
+      e.preventDefault();
+      console.log(input);
+      const result = validateRegister(input);
+      // console.dir(error);
+      if (result) {
+        setError(result);
+      } else {
+        console.log("no error");
+        setError({});
+        await authApi.register(input);
+        setInput(initialInput);
+      }
+    } catch (err) {}
   };
 
   return (
@@ -43,20 +50,20 @@ export default function RegisterPage() {
                 onSubmit={handleSubmitForm}>
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="username"
                     className="block mb-2 text-sm font-bold text-gray-900 font-display">
-                    Enter your name
+                    Enter your username
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    value={input.name}
+                    name="username"
+                    value={input.username}
                     onChange={handleChangeInput}
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:border-blue-600 block w-full p-2.5"
-                    placeholder="name"
+                    placeholder="username"
                   />
                   <div className="text-red-500 text-sm pt-1">
-                    {error.name}
+                    {error.username}
                   </div>
                 </div>
                 <div>

@@ -21,13 +21,13 @@ export default function MyBookingPage() {
             <div className="my-5">
               <div>
                 <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
-                  Name :
+                  Username :
                 </p>
                 <input
                   type="text"
-                  id="first_name"
+                  id="username"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
-                  placeholder="Tony"
+                  placeholder="tony99"
                 />
               </div>
               <div>
@@ -101,10 +101,10 @@ export default function MyBookingPage() {
             <div className="my-5">
               <div>
                 <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
-                  Name :
+                  Username :
                 </p>
                 <div className="text-2xl font-regular text-zinc-500 font-display my-3">
-                  Tony Stark
+                  tony99
                 </div>
               </div>
               <div>

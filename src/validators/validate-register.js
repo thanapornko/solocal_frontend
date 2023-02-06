@@ -1,10 +1,10 @@
 import Joi from "joi";
 
 const registerSchema = Joi.object({
-  name: Joi.string()
+  username: Joi.string()
     .trim()
     .required()
-    .messages({ "string.empty": "name is required" }),
+    .messages({ "string.empty": "username is required" }),
   email: Joi.string()
     .email({ tlds: false })
     .required()
