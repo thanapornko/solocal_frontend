@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import useLayout from "../hooks/useLayout";
 import validateRegister from "../validators/validate-register";
 import * as authApi from "../api/auth-api";
@@ -28,12 +29,16 @@ export default function RegisterPage() {
       if (result) {
         setError(result);
       } else {
-        console.log("no error");
+        // console.log("no error");
         setError({});
         await authApi.register(input);
         setInput(initialInput);
+        toast.success("register successfully");
       }
-    } catch (err) {}
+    } catch (err) {
+      // console.dir(err);
+      toast.error(err.response?.data.message);
+    }
   };
 
   return (

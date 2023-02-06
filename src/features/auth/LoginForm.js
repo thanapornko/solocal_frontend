@@ -4,8 +4,27 @@ import {
   Label,
   TextInput
 } from "flowbite-react";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
 
 export default function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { login } = useAuth();
+
+  const handleSubmitForm = async e => {
+    try {
+      e.preventDefault();
+      await login(email, password);
+      toast.success("login successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data.message);
+    }
+  };
+
   return (
     <Modal.Body>
       <div className=" space-y-10 px-6 pb-4 m-auto ">
@@ -25,6 +44,8 @@ export default function LoginForm() {
             placeholder="Email address"
             className="font-display"
             required={true}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -39,10 +60,14 @@ export default function LoginForm() {
             id="password"
             type="password"
             required={true}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
         </div>
 
-        <Button className="w-full bg-green-600 hover:bg-green-500 rounded-lg  text-center">
+        <Button
+          onClick={handleSubmitForm}
+          className="w-full bg-green-600 hover:bg-green-500 rounded-lg  text-center">
           <p className="text-base text-white font-bold font-display">
             {" "}
             Login

@@ -1,9 +1,11 @@
 import { Modal } from "flowbite-react";
+// import { toast } from "react-toastify";
 import LoginForm from "../features/auth/LoginForm";
 import useLayout from "../hooks/useLayout";
 
 export default function Modals() {
   const { show, notShowing } = useLayout();
+
   return (
     <>
       <Modal
