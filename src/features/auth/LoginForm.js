@@ -7,18 +7,21 @@ import {
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
+import useLayout from "../../hooks/useLayout";
 
 export default function LoginForm() {
+  const { login, authenticatedUser } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useAuth();
+  const { setShow } = useLayout();
 
   const handleSubmitForm = async e => {
     try {
       e.preventDefault();
       await login(email, password);
-      toast.success("login successfully");
+      toast.success("Welcome");
+      setShow(false);
     } catch (err) {
       console.log(err);
       toast.error(err.response?.data.message);
@@ -66,6 +69,7 @@ export default function LoginForm() {
         </div>
 
         <Button
+          type="submit"
           onClick={handleSubmitForm}
           className="w-full bg-green-600 hover:bg-green-500 rounded-lg  text-center">
           <p className="text-base text-white font-bold font-display">

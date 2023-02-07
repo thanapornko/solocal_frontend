@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import decor from "../images/decor.png";
 import useLayout from "../hooks/useLayout";
 import validateRegister from "../validators/validate-register";
 import * as authApi from "../api/auth-api";
@@ -43,10 +44,10 @@ export default function RegisterPage() {
 
   return (
     <>
-      <div className="p-10">
-        <div className="flex flex-col items-center justify-center px-6 py-8 ">
-          <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <div className="flex p-10">
+        <div className="flex flex-col items-center justify-center py-5">
+          <div className="w-full bg-white rounded-lg shadow ">
+            <div className="p-6 space-y-4 ">
               <h1 className="text-zinc-900 text-5xl font-black font-display px-10 pb-10">
                 Register
               </h1>

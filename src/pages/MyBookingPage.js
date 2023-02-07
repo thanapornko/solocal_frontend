@@ -1,45 +1,63 @@
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
 import profile from "../images/profile.jpg";
+import blackwidow from "../images/blackwidow.jpg";
+import calendar from "../images/calendar.png";
 
 export default function MyBookingPage() {
   const [edit, setEdit] = useState(false);
+  const { authenticatedUser } = useAuth();
 
   return (
     <>
-      <div className="flex justify-between my-20 mx-20">
+      <div className="flex justify-between mt-10 mb-20 mx-20">
         {edit ? (
           ////////////////////////////
-          <div className="pl-20">
-            <h1 className="text-center text-zinc-900 text-5xl font-black font-display mb-10">
+          <div className="p-10 w-1/2 border shadow-xl rounded-lg ">
+            <h1 className="text-center text-zinc-900 text-4xl font-black font-display mb-10">
               MY BOOKING
             </h1>
-            <img
-              src={profile}
-              className="h-60 w-60 rounded-full m-auto border-4 mb-10"
-              alt="profile"
-            />
+            <div className="text-center">
+              <button>
+                <img
+                  src={
+                    authenticatedUser.profileImage ||
+                    profile
+                  }
+                  className="h-60 w-60 rounded-full m-auto border-4 mb-5"
+                  alt="blackwidow"
+                />
+                <input
+                  type="file"
+                  className="text-sm text-grey-500
+            hover:file:cursor-pointer hover:file:bg-grey-300
+            hover:file:text-blue-500
+          "
+                />
+              </button>
+            </div>
             <div className="my-5">
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Username :
                 </p>
                 <input
                   type="text"
                   id="username"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
-                  placeholder="tony99"
+                  placeholder={authenticatedUser.username}
                 />
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Email :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
-                  TonyStark@gmail.com
+                <div className="text-1xl font-regular text-zinc-500 font-display my-3">
+                  {authenticatedUser.email}
                 </div>
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Destination :
                 </p>
                 <select
@@ -52,18 +70,18 @@ export default function MyBookingPage() {
                 </select>
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Guide :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
+                <div className="text-xl font-regular text-zinc-500 font-display my-3">
                   Uncle Pol
                 </div>
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Date :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
+                <div className="text-xl font-regular text-zinc-500 font-display my-3">
                   12/12/2222
                   <button>
                     <i className="fa-solid fa-pen-to-square ml-2"></i>
@@ -71,10 +89,10 @@ export default function MyBookingPage() {
                 </div>
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Price :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
+                <div className="text-xl font-regular text-zinc-500 font-display my-3">
                   2,500 THB
                 </div>
               </div>
@@ -89,61 +107,63 @@ export default function MyBookingPage() {
             </div>
           </div>
         ) : (
-          <div className="pl-20">
-            <h1 className="text-center text-zinc-900 text-5xl font-black font-display mb-10">
+          <div className="p-10 w-1/2 border shadow-xl rounded-lg ">
+            <h1 className="text-center text-zinc-900 text-4xl font-black font-display mb-10">
               MY BOOKING
             </h1>
             <img
-              src={profile}
+              src={
+                authenticatedUser.profileImage || profile
+              }
               className="h-60 w-60 rounded-full m-auto border-4 mb-10"
-              alt="profile"
+              alt="blackwidow"
             />
             <div className="my-5">
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Username :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
-                  tony99
+                <div className="text-xl font-regular text-zinc-500 font-display my-3">
+                  {authenticatedUser.username}
                 </div>
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Email :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
-                  TonyStark@gmail.com
+                <div className="text-xl font-regular text-zinc-500 font-display my-3">
+                  {authenticatedUser.email}
                 </div>
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Destination :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
+                <div className="text-xl font-regular text-zinc-500 font-display my-3">
                   Tao Island
                 </div>
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Guide :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
+                <div className="text-xl font-regular text-zinc-500 font-display my-3">
                   Uncle Pol
                 </div>
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Date :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
+                <div className="text-xl font-regular text-zinc-500 font-display my-3">
                   12/12/2222
                 </div>
               </div>
               <div>
-                <p className="text-3xl font-semibold text-zinc-900 font-display my-3">
+                <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                   Price :
                 </p>
-                <div className="text-2xl font-regular text-zinc-500 font-display my-3">
+                <div className="text-xl font-regular text-zinc-500 font-display my-3">
                   2,500 THB
                 </div>
               </div>
@@ -158,8 +178,12 @@ export default function MyBookingPage() {
             </div>
           </div>
         )}
-        <div className="text-center text-xl font-semibold font-display p-5 border w-2/5 ">
-          Calendar will be here ka
+        <div className="text-center text-xl font-semibold font-display p-5  w-2/5 ">
+          <img
+            src={calendar}
+            className="  m-auto border-4 mb-10 "
+            alt="calendar"
+          />
         </div>
       </div>
     </>

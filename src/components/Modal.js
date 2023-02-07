@@ -1,5 +1,4 @@
 import { Modal } from "flowbite-react";
-// import { toast } from "react-toastify";
 import LoginForm from "../features/auth/LoginForm";
 import useLayout from "../hooks/useLayout";
 
@@ -11,7 +10,7 @@ export default function Modals() {
       <Modal
         show={show}
         size="md"
-        className=" w-1/3 m-auto mt-12 bg-inherit">
+        className=" w-1/3 m-auto mt-12 bg-transparent">
         <Modal.Header onClick={notShowing} />
         <LoginForm />
       </Modal>

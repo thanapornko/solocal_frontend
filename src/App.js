@@ -10,7 +10,7 @@ export default function App() {
       <Router />
       <ToastContainer
         position="bottom-right"
-        autoClose={1000}
+        autoClose={500}
         hideProgressBar
         theme="light"
       />

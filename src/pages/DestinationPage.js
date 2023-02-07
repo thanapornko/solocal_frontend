@@ -3,9 +3,23 @@
 import tao1 from "../images/tao1.jpg";
 import tao2 from "../images/tao2.jpg";
 import profile from "../images/profile.jpg";
-import Modals from "../components/Modal";
+// import Modals from "../components/Modal";
+import useAuth from "../hooks/useAuth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function DestinationPage() {
+  const { authenticatedUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleOnClickForm = () => {
+    console.log(authenticatedUser);
+    if (!authenticatedUser) {
+      return toast.error("Please login");
+    }
+    navigate("/confirmbooking");
+  };
+
   return (
     <>
       <div className="p-10">
@@ -88,7 +102,9 @@ export default function DestinationPage() {
               Calendar will be here ka
             </div>
             <div className="flex m-5">
-              <button className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 rounded-3xl w-1/3 p-3 m-auto">
+              <button
+                onClick={handleOnClickForm}
+                className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 rounded-3xl w-1/3 p-3 m-auto">
                 Let's Go
               </button>
             </div>
