@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import solocal from "../images/solocal.png";
 import useLayout from "../hooks/useLayout";
 import useAuth from "../hooks/useAuth";
+import profile from "../images/profile.jpg";
 
 export default function Navbar() {
   const { setShow, show } = useLayout();
@@ -11,20 +13,20 @@ export default function Navbar() {
       <ul className="flex p-2 bg-zinc-900 justify-between content-center">
         <div className="flex items-center pl-5">
           <li className="mr-1">
-            <a
-              className="text-slate-100 text-3xl font-bold font-display"
-              href="/">
+            <Link
+              to="/"
+              className="text-slate-100 text-3xl font-bold font-display">
               <p>SOLOCAL</p>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/">
+            <Link to="/">
               <img
                 src={solocal}
                 className="h-14"
                 alt="solocal"
               />
-            </a>
+            </Link>
           </li>
         </div>
         <div className="flex items-center">
@@ -32,18 +34,18 @@ export default function Navbar() {
             {!authenticatedUser ? (
               ""
             ) : (
-              <a
-                className="text-slate-100 hover:text-neutral-400 text-xl font-bold font-display"
-                href="/mybooking">
+              <Link
+                to="/mybooking"
+                className="text-slate-100 hover:text-neutral-400 text-xl font-bold font-display">
                 MY BOOKING
-              </a>
+              </Link>
             )}
           </li>
-          <li className="mr-6">
-            <a
-              className="text-slate-100 hover:text-neutral-400 text-xl font-bold font-display "
-              show="false">
-              {!authenticatedUser ? (
+          {!authenticatedUser ? (
+            <li className="mr-3">
+              <a
+                className="text-slate-100 hover:text-neutral-400 text-xl font-bold font-display "
+                show="false">
                 <p
                   className="mx=4"
                   onClick={() => {
@@ -51,13 +53,31 @@ export default function Navbar() {
                   }}>
                   LOGIN
                 </p>
-              ) : (
+              </a>
+            </li>
+          ) : (
+            <li className="mr-2">
+              <a
+                className="text-slate-100 hover:text-neutral-400 text-xl font-bold font-display "
+                show="false">
                 <p className="mx=4" onClick={logout}>
                   LOGOUT
                 </p>
-              )}
-            </a>
-          </li>
+              </a>
+            </li>
+          )}
+          {!authenticatedUser ? (
+            ""
+          ) : (
+            <li className="mr-5">
+              <img
+                src={
+                  authenticatedUser.profileImage || profile
+                }
+                className="h-10 w-10 rounded-full"
+              />
+            </li>
+          )}
         </div>
       </ul>
     </>

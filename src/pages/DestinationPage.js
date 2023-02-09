@@ -1,27 +1,45 @@
-// import Navbar from "../layouts/Navbar";
-// import Footer from "../layouts/Footer";
+import { useState, useEffect } from "react";
 import tao1 from "../images/tao1.jpg";
 import tao2 from "../images/tao2.jpg";
 import profile from "../images/profile.jpg";
-// import Modals from "../components/Modal";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import useConfirm from "../hooks/useConfirm";
+
+import ConfirmBooking from "../features/auth/ConfirmBooking";
+import * as addApi from "../api/add-api";
 
 export default function DestinationPage() {
   const { authenticatedUser } = useAuth();
-  const navigate = useNavigate();
+  const { open, setOpen } = useConfirm();
+  // const [open, setOpen] = useState(false);
+
+  // const [posts, setPosts] = useState([]);
+  // const navigate = useNavigate();
 
   const handleOnClickForm = () => {
     console.log(authenticatedUser);
     if (!authenticatedUser) {
       return toast.error("Please login");
     }
-    navigate("/confirmbooking");
+    setOpen(!open);
+    // navigate("/confirmbooking");
   };
+
+  // const fetchPost = async (name, description) => {
+  //   const res = await addApi.addGuide({
+  //     name,
+  //     description
+  //   });
+  //   setPosts(res.data.posts);
+  //   console.log(res.data.posts);
+  // };
+  // fetchPost();
 
   return (
     <>
+      {open && <ConfirmBooking />}
       <div className="p-10">
         {/* title, pic, description */}
         <div className="text-zinc-900 text-5xl font-black font-display px-10 pb-10">

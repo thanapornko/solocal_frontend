@@ -11,7 +11,12 @@ export default function LayoutContextProvider({
   const notShowing = () => setShow(false);
   return (
     <LayoutContext.Provider
-      value={{ show, setShow, showing, notShowing }}>
+      value={{
+        show,
+        setShow,
+        showing,
+        notShowing
+      }}>
       {children}
     </LayoutContext.Provider>
   );

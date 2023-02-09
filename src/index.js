@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 // import "@fortawesome/fontawesome-free/css/all.min.css";
 import App from "./App";
 import AuthContextProvider from "./contexts/AuthContext";
+import ConfirmContextProvider from "./contexts/ConfirmContext";
 import LayoutContextProvider from "./contexts/LayoutContext";
 
 const root = ReactDOM.createRoot(
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
   <AuthContextProvider>
-    <LayoutContextProvider>
-      <App />
-    </LayoutContextProvider>
+    <ConfirmContextProvider>
+      <LayoutContextProvider>
+        <App />
+      </LayoutContextProvider>
+    </ConfirmContextProvider>
   </AuthContextProvider>
 
   // </React.StrictMode>

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import * as authApi from "../api/auth-api";
+import * as userApi from "../api/user-api";
 import {
   getAccessToken,
   removeAccessToken,
@@ -44,9 +45,23 @@ export default function AuthContextProvider({ children }) {
     setAuthenticatedUser(null);
   };
 
+  const updateProfile = async data => {
+    const res = await userApi.updateProfileImage(data);
+    // res.data =  {"profileImage": "https://res.cloudinary.com/dhgny94kc/image/upload/v1675919318/1675915242378428504823.jpg"}
+    setAuthenticatedUser({
+      ...authenticatedUser,
+      ...res.data
+    });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ authenticatedUser, login, logout }}>
+      value={{
+        authenticatedUser,
+        login,
+        logout,
+        updateProfile
+      }}>
       {children}
     </AuthContext.Provider>
   );

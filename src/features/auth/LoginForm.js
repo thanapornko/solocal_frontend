@@ -4,6 +4,7 @@ import {
   Label,
   TextInput
 } from "flowbite-react";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
@@ -80,11 +81,12 @@ export default function LoginForm() {
 
         <div className="text-sm font-light text-gray-500 text-center font-display">
           Don’t have an account?{" "}
-          <a
-            href="/register"
+          <Link
+            onClick={() => setShow(false)}
+            to="/register"
             className="font-medium text-blue-600 hover:underline font-display">
             Register
-          </a>
+          </Link>
         </div>
       </div>
     </Modal.Body>

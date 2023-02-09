@@ -8,6 +8,7 @@ import MyBookingPage from "../pages/MyBookingPage";
 import RegisterPage from "../pages/RegisterPage";
 import Layout from "../layouts/Layout";
 import ConfirmBookingPage from "../pages/ConfirmBookingPage";
+import ProtectedRoute from "../features/auth/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/mybooking",
-        element: <MyBookingPage />
+        element: (
+          <ProtectedRoute>
+            <MyBookingPage />
+          </ProtectedRoute>
+        )
       },
       {
         path: "/register",

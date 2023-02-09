@@ -1,12 +1,22 @@
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import profile from "../images/profile.jpg";
-import blackwidow from "../images/blackwidow.jpg";
 import calendar from "../images/calendar.png";
 
 export default function MyBookingPage() {
   const [edit, setEdit] = useState(false);
-  const { authenticatedUser } = useAuth();
+  const { authenticatedUser, updateProfile } = useAuth();
+  const [file, setFile] = useState(null);
+
+  const handleClickSave = async () => {
+    // convert => multipart form data
+    const formData = new FormData();
+    // method append เพิ่มkey
+    formData.append("profileImage", file);
+    // ชื่อ key, file
+    await updateProfile(formData);
+    setEdit(!edit);
+  };
 
   return (
     <>
@@ -21,13 +31,23 @@ export default function MyBookingPage() {
               <button>
                 <img
                   src={
-                    authenticatedUser.profileImage ||
-                    profile
+                    file
+                      ? URL.createObjectURL(file)
+                      : authenticatedUser.profileImage
                   }
+                  // แปลงเป็นลิ้ง
+                  // {
+                  //   authenticatedUser.profileImage ||
+                  //   profile
+                  // }
                   className="h-60 w-60 rounded-full m-auto border-4 mb-5"
-                  alt="blackwidow"
                 />
                 <input
+                  onChange={e => {
+                    if (e.target.files[0]) {
+                      setFile(e.target.files[0]);
+                    }
+                  }}
                   type="file"
                   className="text-sm text-grey-500
             hover:file:cursor-pointer hover:file:bg-grey-300
@@ -100,7 +120,8 @@ export default function MyBookingPage() {
             <div className="flex m-5">
               <button
                 edit="true"
-                onClick={() => setEdit(!edit)}
+                onClick={handleClickSave}
+                // onClick={() => setEdit(!edit)}
                 className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 hover:bg-green-500 rounded-3xl w-1/3 p-3 m-auto mt-5">
                 Save
               </button>
