@@ -44,11 +44,11 @@ export default function RegisterPage() {
 
   return (
     <>
-      <div className="flex p-10">
-        <div className="flex flex-col items-center justify-center py-5">
-          <div className="w-full bg-white rounded-lg shadow ">
+      <div className="p-10 w-1/2 m-auto">
+        <div className="flex flex-col items-center justify-center py-5 ">
+          <div className="w-full bg-white rounded-lg shadow-xl">
             <div className="p-6 space-y-4 ">
-              <h1 className="text-zinc-900 text-5xl font-black font-display px-10 pb-10">
+              <h1 className="text-zinc-900 text-5xl font-black font-display px-10 pb-10 pt-5">
                 Register
               </h1>
               <form
