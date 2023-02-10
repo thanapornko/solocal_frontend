@@ -1,10 +1,42 @@
 import { Modal, Button } from "flowbite-react";
 import useAuth from "../../hooks/useAuth";
 import useConfirm from "../../hooks/useConfirm";
+import { useState } from "react";
+import * as bookingApi from "../../api/booking-api";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-export default function ConfirmBooking() {
+export default function ConfirmBooking({
+  newDate,
+  content
+}) {
   const { authenticatedUser } = useAuth();
   const { open, setOpen } = useConfirm();
+  // const [input, setInput] = useState({});
+  const navigate = useNavigate();
+
+  const params = useParams();
+
+  const input = {
+    destinationId: params.destinationId,
+    date: { newDate }
+  };
+  const handleSubmitBooking = async e => {
+    try {
+      e.preventDefault();
+
+      toast.success("booking successfully");
+      setOpen(false);
+      navigate("/mybooking");
+      await bookingApi.createBooking(input);
+    } catch (err) {
+      console.dir(err);
+      toast.error("not available");
+    }
+  };
+  console.log(input);
+
   return (
     <>
       <Modal
@@ -19,10 +51,14 @@ export default function ConfirmBooking() {
             </h3>
             <div>
               <div className="mb-2 block">
-                <h2 className="block mb-2 text-base font-bold text-gray-900 font-display">
+                <h2
+                  name="username"
+                  className="block mb-2 text-base font-bold text-gray-900 font-display">
                   Username :{" "}
                 </h2>
-                <h2 className="block mb-2 text-base font-medium text-gray-400 font-display">
+                <h2
+                  value={authenticatedUser.username}
+                  className="block mb-2 text-base font-medium text-gray-400 font-display">
                   {authenticatedUser.username}
                 </h2>
               </div>
@@ -35,11 +71,15 @@ export default function ConfirmBooking() {
                 </span>
               </div>
               <div className="mb-2 block">
-                <span className="block mb-2 text-base font-bold text-gray-900 font-display">
+                <span
+                  name="destination"
+                  className="block mb-2 text-base font-bold text-gray-900 font-display">
                   Destination :{" "}
                 </span>
-                <span className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  Tao Island
+                <span
+                  value={content.name}
+                  className="block mb-2 text-base font-medium text-gray-400 font-display">
+                  {content.name}
                 </span>
               </div>
               <div className="mb-2 block">
@@ -47,15 +87,19 @@ export default function ConfirmBooking() {
                   Guide name :{" "}
                 </span>
                 <span className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  Uncle Pol
+                  {content.Guide.name}
                 </span>
               </div>
               <div className="mb-2 block">
-                <span className="block mb-2 text-base font-bold text-gray-900 font-display">
+                <span
+                  name="date"
+                  className="block mb-2 text-base font-bold text-gray-900 font-display">
                   Date :{" "}
                 </span>
-                <span className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  11/11/2111
+                <span
+                  value={newDate}
+                  className="block mb-2 text-base font-medium text-gray-400 font-display">
+                  {newDate}
                 </span>
               </div>
               <div className="mb-2 block">
@@ -69,6 +113,7 @@ export default function ConfirmBooking() {
             </div>
             <Button
               type="submit"
+              onClick={handleSubmitBooking}
               className="w-full bg-green-600 hover:bg-green-500 rounded-lg  text-center">
               <p className="text-base text-white font-bold font-display">
                 {" "}

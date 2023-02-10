@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import tao from "../images/tao.jpg";
 // import cnx from "../images/cnx.jpg";
 // import bkk from "../images/bkk.jpg";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import * as destinationApi from "../api/destination-api";
 
 export default function Card() {
-  const params = useParams();
+  // const params = useParams();
   const [content, setContent] = useState([]);
 
   useEffect(() => {

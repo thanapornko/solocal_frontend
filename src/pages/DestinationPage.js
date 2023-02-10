@@ -1,7 +1,4 @@
 import { useState, useEffect } from "react";
-import tao1 from "../images/tao1.jpg";
-import tao2 from "../images/tao2.jpg";
-import profile from "../images/profile.jpg";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
@@ -10,12 +7,13 @@ import ConfirmBooking from "../features/auth/ConfirmBooking";
 import * as destinationApi from "../api/destination-api";
 import * as guideApi from "../api/guide-api";
 import { useParams } from "react-router-dom";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 export default function DestinationPage() {
-  console.log("first");
   const { authenticatedUser } = useAuth();
   const { open, setOpen } = useConfirm();
-  // const [open, setOpen] = useState(false);
+  const [date, setDate] = useState(new Date());
 
   const params = useParams();
   // { dddd: '1111', eeee: '7777' }
@@ -41,29 +39,28 @@ export default function DestinationPage() {
     fetchContent();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchDestinationImage = async () => {
-  //     const res = await destinationApi.addDestinationImage(
-  //       params.destinationId
-  //     );
-  //     setContent(res.data.destinations);
-  //   };
-  //   fetchDestinationImage();
-  // }, []);
+  const onChange = date => {
+    setDate(date);
+  };
 
-  // useEffect(() => {
-  //   const fetchGuideImage = async () => {
-  //     const res = await guideApi.addGuideImage(
-  //       params.guideId
-  //     );
-  //     setContent(res.data.guides);
-  //   };
-  //   fetchGuideImage();
-  // }, []);
+  const newDate = new Intl.DateTimeFormat("en-US").format(
+    date
+  );
+
+  console.log(newDate);
+
+  // console.log(
+  //   new Intl.DateTimeFormat("en-US").format(date)
+  // );
 
   return (
     <>
-      {open && <ConfirmBooking />}
+      {open && (
+        <ConfirmBooking
+          newDate={newDate}
+          content={content}
+        />
+      )}
       <div className="p-10">
         {/* title, pic, description */}
         <div className="text-zinc-900 text-5xl font-black font-display px-10 pb-10">
@@ -95,6 +92,11 @@ export default function DestinationPage() {
             {content.activity}
           </p>
         </div>
+        <div className="mt-10">
+          <h2 className="text-zinc-900 text-5xl font-black font-display p-10">
+            PRICE : 2,500 THB
+          </h2>
+        </div>
         <h2 className="text-zinc-900 text-5xl font-black font-display mt-20 mb-10">
           GUIDE : {content.Guide.name}
         </h2>
@@ -118,10 +120,10 @@ export default function DestinationPage() {
           {/* calendar */}
           <div className="border w-1/2 p-3 flex-col ">
             <p className="text-center text-zinc-900 text-xl font-black font-display mb-3">
-              AVAILABLE DATE
+              SELECT DATE
             </p>
             <div className="m-auto border w-2/3 h-2/3">
-              Calendar will be here ka
+              <Calendar onChange={onChange} value={date} />
             </div>
             <div className="flex m-5">
               <button

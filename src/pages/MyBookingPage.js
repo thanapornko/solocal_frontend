@@ -103,9 +103,6 @@ export default function MyBookingPage() {
                 </p>
                 <div className="text-xl font-regular text-zinc-500 font-display my-3">
                   12/12/2222
-                  <button>
-                    <i className="fa-solid fa-pen-to-square ml-2"></i>
-                  </button>
                 </div>
               </div>
               <div>
@@ -199,13 +196,6 @@ export default function MyBookingPage() {
             </div>
           </div>
         )}
-        <div className="text-center text-xl font-semibold font-display p-5  w-2/5 ">
-          <img
-            src={calendar}
-            className="  m-auto border-4 mb-10 "
-            alt="calendar"
-          />
-        </div>
       </div>
     </>
   );
