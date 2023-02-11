@@ -32,8 +32,8 @@ export default function Card() {
           <div>
             <img
               className="rounded-t-lg"
-              src={tao}
-              alt=""
+              src={el.image1}
+              alt={el.name}
             />
           </div>
           <div className="p-5">

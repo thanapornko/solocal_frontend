@@ -6,7 +6,7 @@ import validateRegister from "../validators/validate-register";
 import * as authApi from "../api/auth-api";
 
 const initialInput = {
-  username: "",
+  name: "",
   email: "",
   password: "",
   confirmPassword: ""
@@ -56,20 +56,20 @@ export default function RegisterPage() {
                 onSubmit={handleSubmitForm}>
                 <div>
                   <label
-                    htmlFor="username"
+                    htmlFor="name"
                     className="block mb-2 text-sm font-bold text-gray-900 font-display">
-                    Enter your username
+                    Enter your name
                   </label>
                   <input
                     type="text"
-                    name="username"
-                    value={input.username}
+                    name="name"
+                    value={input.name}
                     onChange={handleChangeInput}
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:border-blue-600 block w-full p-2.5"
-                    placeholder="username"
+                    placeholder="name"
                   />
                   <div className="text-red-500 text-sm pt-1">
-                    {error.username}
+                    {error.name}
                   </div>
                 </div>
                 <div>

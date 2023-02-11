@@ -61,7 +61,7 @@ export default function DestinationPage() {
           content={content}
         />
       )}
-      <div className="p-10">
+      <div className="py-10 px-20">
         {/* title, pic, description */}
         <div className="text-zinc-900 text-5xl font-black font-display px-10 pb-10">
           {content.name}
@@ -79,58 +79,63 @@ export default function DestinationPage() {
           />
         </div>
         <div className="flex">
-          <p className="text-center text-zinc-500 text-3xl font-semibold font-display p-10">
+          <p className="text-center text-zinc-500 text-2xl font-semibold font-display p-10">
             {content.description}
           </p>
         </div>
         {/* activities */}
-        <div className="mt-10">
-          <h2 className="text-zinc-900 text-5xl font-black font-display p-10">
+        <div>
+          <h2 className="text-zinc-900 text-4xl font-black font-display px-10 pb-5 pt-10">
             ACTIVITIES
           </h2>
-          <p className="text-center text-zinc-500 text-3xl font-semibold font-display py-1 p-10">
+          <p className="text-center text-zinc-500 text-2xl font-semibold font-display px-10">
             {content.activity}
           </p>
         </div>
         <div className="mt-10">
-          <h2 className="text-zinc-900 text-5xl font-black font-display p-10">
-            PRICE : 2,500 THB
+          <h2 className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 rounded-3xl w-1/3 p-3 m-auto mt-5">
+            PRICE : {content.price}
           </h2>
         </div>
-        <h2 className="text-zinc-900 text-5xl font-black font-display mt-20 mb-10">
-          GUIDE : {content.Guide.name}
-        </h2>
-        <div className="flex justify around">
-          {/* guide */}
-          <div className="border w-1/2 p-3">
-            <div className="flex-col">
-              <img
-                src={content.Guide.profileImage}
-                className="h-60 w-60 rounded-full m-auto border-4 mb-10"
-                alt="profile"
-              />
-              <h3 className="text-center text-zinc-900 text-3xl font-black font-display">
-                {content.Guide.name}
-              </h3>
-              <p className="text-center text-zinc-500 text-3xl font-semibold font-display pt-5">
-                {content.Guide?.description}
+        <div className="bg-zinc-800 rounded-3xl">
+          <h2 className="text-stone-300 text-4xl font-black font-display px-10 py-5 mt-20">
+            GUIDE : {content.Guide.name}
+          </h2>
+          <div className="flex">
+            {/* guide */}
+            <div className="border-t border-r w-1/2 p-10">
+              <div className="flex-col">
+                <img
+                  src={content.Guide.profileImage}
+                  className="h-60 w-60 rounded-full m-auto mb-5"
+                  alt="profile"
+                />
+                <h3 className="text-center text-stone-300 text-3xl font-bold underline underline-offset-8 font-display">
+                  {content.Guide.name}
+                </h3>
+                <p className="text-center text-stone-300 text-2xl font-semibold font-display mt-5">
+                  {content.Guide?.description}
+                </p>
+              </div>
+            </div>
+            {/* calendar */}
+            <div className="border-t w-1/2 flex-col py-10 px-40">
+              <p className="text-center text-stone-300 text-xl font-black font-display mb-5">
+                SELECT DATE
               </p>
-            </div>
-          </div>
-          {/* calendar */}
-          <div className="border w-1/2 p-3 flex-col ">
-            <p className="text-center text-zinc-900 text-xl font-black font-display mb-3">
-              SELECT DATE
-            </p>
-            <div className="m-auto border w-2/3 h-2/3">
-              <Calendar onChange={onChange} value={date} />
-            </div>
-            <div className="flex m-5">
-              <button
-                onClick={handleOnClickForm}
-                className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 rounded-3xl w-1/3 p-3 m-auto">
-                Let's Go
-              </button>
+
+              <Calendar
+                className="mb-5"
+                onChange={onChange}
+                value={date}
+              />
+              <div className="flex">
+                <button
+                  onClick={handleOnClickForm}
+                  className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 hover:bg-green-500  rounded-3xl w-2/3 p-3 m-auto">
+                  Let's Go
+                </button>
+              </div>
             </div>
           </div>
         </div>

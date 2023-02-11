@@ -52,14 +52,14 @@ export default function ConfirmBooking({
             <div>
               <div className="mb-2 block">
                 <h2
-                  name="username"
+                  name="name"
                   className="block mb-2 text-base font-bold text-gray-900 font-display">
-                  Username :{" "}
+                  Name :{" "}
                 </h2>
                 <h2
-                  value={authenticatedUser.username}
+                  value={authenticatedUser.name}
                   className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  {authenticatedUser.username}
+                  {authenticatedUser.name}
                 </h2>
               </div>
               <div className="mb-2 block">

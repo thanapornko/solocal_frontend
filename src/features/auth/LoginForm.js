@@ -62,6 +62,7 @@ export default function LoginForm() {
           </div>
           <TextInput
             id="password"
+            placeholder="Password"
             type="password"
             required={true}
             value={password}
