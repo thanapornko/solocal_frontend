@@ -20,22 +20,28 @@ export default function ConfirmBooking({
 
   const input = {
     destinationId: params.destinationId,
-    date: { newDate }
+    date: newDate
   };
+
   const handleSubmitBooking = async e => {
     try {
       e.preventDefault();
 
-      toast.success("booking successfully");
+      await bookingApi.createBooking(input);
       setOpen(false);
       navigate("/mybooking");
-      await bookingApi.createBooking(input);
+      toast.success("booking successfully");
     } catch (err) {
-      console.dir(err);
-      toast.error("not available");
+      if (err.message === "Booking not available") {
+        toast.error(
+          "The selected date and destination are not available"
+        );
+      } else {
+        console.dir(err);
+        toast.error("An error occurred while booking");
+      }
     }
   };
-  console.log(input);
 
   return (
     <>
@@ -107,7 +113,7 @@ export default function ConfirmBooking({
                   Price :{" "}
                 </span>
                 <span className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  2,500 THB
+                  {content.price}
                 </span>
               </div>
             </div>

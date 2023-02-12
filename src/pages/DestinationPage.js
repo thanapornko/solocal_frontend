@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import useConfirm from "../hooks/useConfirm";
 import ConfirmBooking from "../features/auth/ConfirmBooking";
 import * as destinationApi from "../api/destination-api";
-import * as guideApi from "../api/guide-api";
 import { useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -13,6 +12,7 @@ import "react-calendar/dist/Calendar.css";
 export default function DestinationPage() {
   const { authenticatedUser } = useAuth();
   const { open, setOpen } = useConfirm();
+
   const [date, setDate] = useState(new Date());
 
   const params = useParams();
@@ -43,15 +43,10 @@ export default function DestinationPage() {
     setDate(date);
   };
 
-  const newDate = new Intl.DateTimeFormat("en-US").format(
-    date
-  );
+  const newDate = date.toISOString().slice(0, 10);
 
   console.log(newDate);
-
-  // console.log(
-  //   new Intl.DateTimeFormat("en-US").format(date)
-  // );
+  console.log(content);
 
   return (
     <>

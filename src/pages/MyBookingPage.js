@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import useAuth from "../hooks/useAuth";
 import profile from "../images/profile.jpg";
+import * as bookingApi from "../api/booking-api";
 
 export default function MyBookingPage() {
   const [edit, setEdit] = useState(false);
   const { authenticatedUser, updateProfile } = useAuth();
+  const [content, setContent] = useState({});
+
   const [file, setFile] = useState(null);
 
   const handleClickSave = async () => {
@@ -16,6 +20,22 @@ export default function MyBookingPage() {
     await updateProfile(formData);
     setEdit(!edit);
   };
+
+  const handleCancelBooking = async bookingId => {
+    await bookingApi.deleteBooking(bookingId);
+  };
+
+  ///////////////////////////////
+  useEffect(() => {
+    const fetchContent = async () => {
+      const res = await bookingApi.getBooking(
+        authenticatedUser.id
+      );
+      setContent(res.data.booking);
+    };
+    fetchContent();
+  }, []);
+  console.log(content);
 
   return (
     <>
@@ -79,21 +99,16 @@ export default function MyBookingPage() {
               <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                 Destination :
               </p>
-              <select
-                id="destinations"
-                name="destinations"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5">
-                <option value="tao">Tao Island</option>
-                <option value="cnx">Chiangmai</option>
-                <option value="bkk">Bangkok</option>
-              </select>
+              <div className="text-xl font-regular text-zinc-500 font-display my-3">
+                {content.Destination?.name || "-"}
+              </div>
             </div>
             <div>
               <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                 Guide :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                Uncle Pol
+                {content.Destination?.Guide?.name || "-"}
               </div>
             </div>
             <div>
@@ -101,7 +116,7 @@ export default function MyBookingPage() {
                 Date :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                12/12/2222
+                {content.date}
               </div>
             </div>
             <div>
@@ -109,7 +124,7 @@ export default function MyBookingPage() {
                 Price :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                2,500 THB
+                {content.Destination?.price || "-"}
               </div>
             </div>
           </div>
@@ -120,6 +135,13 @@ export default function MyBookingPage() {
               // onClick={() => setEdit(!edit)}
               className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 hover:bg-green-500 rounded-3xl w-1/3 p-3 m-auto mt-5">
               Save
+            </button>
+            <button
+              edit="true"
+              onClick={handleCancelBooking}
+              // onClick={() => setEdit(!edit)}
+              className="text-center text-slate-100 text-xl font-bold font-display bg-red-600 hover:bg-red-500 rounded-3xl w-1/3 p-3 m-auto mt-5">
+              Cancel Booking
             </button>
           </div>
         </div>
@@ -155,7 +177,7 @@ export default function MyBookingPage() {
                 Destination :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                Tao Island
+                {content.Destination?.name || "-"}
               </div>
             </div>
             <div>
@@ -163,7 +185,7 @@ export default function MyBookingPage() {
                 Guide :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                Uncle Pol
+                {content.Destination?.Guide?.name || "-"}
               </div>
             </div>
             <div>
@@ -171,7 +193,7 @@ export default function MyBookingPage() {
                 Date :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                12/12/2222
+                {content.date}
               </div>
             </div>
             <div>
@@ -179,7 +201,7 @@ export default function MyBookingPage() {
                 Price :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                2,500 THB
+                {content.Destination?.price || "-"}
               </div>
             </div>
           </div>
