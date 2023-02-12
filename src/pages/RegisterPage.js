@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import decor from "../images/decor.png";
 import useLayout from "../hooks/useLayout";
 import validateRegister from "../validators/validate-register";
@@ -16,6 +17,7 @@ export default function RegisterPage() {
   const [input, setInput] = useState(initialInput);
   const [error, setError] = useState({});
   const { show, setShow } = useLayout();
+  const navigate = useNavigate();
 
   const handleChangeInput = e => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -35,6 +37,8 @@ export default function RegisterPage() {
         await authApi.register(input);
         setInput(initialInput);
         toast.success("register successfully");
+        navigate("/");
+        setShow(true);
       }
     } catch (err) {
       // console.dir(err);

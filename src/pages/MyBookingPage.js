@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
 import profile from "../images/profile.jpg";
 import * as bookingApi from "../api/booking-api";
+import * as userApi from "../api/user-api";
 
 export default function MyBookingPage() {
   const [edit, setEdit] = useState(false);
   const { authenticatedUser, updateProfile } = useAuth();
   const [content, setContent] = useState({});
-
   const [file, setFile] = useState(null);
+  const navigate = useNavigate();
+  // const [name, setName] = useState("");
+
+  // const handleChangeName = async e => {
+  //   try {
+  //     e.preventDefault();
+  //     await userApi.updateUserName(name);
+  //     toast.success("Name successfully updated!");
+  //   } catch (err) {
+  //     console.log(err);
+  //     toast.error(err.response?.data.message);
+  //   }
+  // };
 
   const handleClickSave = async () => {
     // convert => multipart form data
@@ -20,9 +35,34 @@ export default function MyBookingPage() {
     await updateProfile(formData);
     setEdit(!edit);
   };
+  //////////////////////////////////////////
+  const fetchBookingId = async userId => {
+    try {
+      const res = await bookingApi.getBooking(userId);
+      console.log(res.data.booking.id);
+      return res.data.booking.id;
+    } catch (error) {
+      toast.error("You don't have any bookings to delete");
+    }
+  };
 
-  const handleCancelBooking = async bookingId => {
-    await bookingApi.deleteBooking(bookingId);
+  const handleCancelBooking = async () => {
+    const userId = authenticatedUser.id;
+    const bookingId = await fetchBookingId(userId);
+    if (!bookingId) {
+      toast.error("Cannot fetch booking ID.");
+      return;
+    }
+
+    try {
+      await bookingApi.deleteBooking(bookingId);
+      toast.success(
+        "The booking was successfully cancelled"
+      );
+      navigate("/");
+    } catch (error) {
+      toast.error("Cannot cancel booking");
+    }
   };
 
   ///////////////////////////////
@@ -83,6 +123,8 @@ export default function MyBookingPage() {
               <input
                 type="text"
                 id="name"
+                // value={name}
+                // onChange={e => setName(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
                 placeholder={authenticatedUser.name}
               />
@@ -100,7 +142,9 @@ export default function MyBookingPage() {
                 Destination :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content.Destination?.name || "-"}
+                {content && content.Destination
+                  ? content.Destination.name
+                  : "-"}
               </div>
             </div>
             <div>
@@ -108,7 +152,9 @@ export default function MyBookingPage() {
                 Guide :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content.Destination?.Guide?.name || "-"}
+                {content && content.Destination
+                  ? content.Destination.Guide.name
+                  : "-"}
               </div>
             </div>
             <div>
@@ -116,7 +162,7 @@ export default function MyBookingPage() {
                 Date :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content.date}
+                {content ? content.date : "-"}
               </div>
             </div>
             <div>
@@ -124,7 +170,9 @@ export default function MyBookingPage() {
                 Price :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content.Destination?.price || "-"}
+                {content && content.Destination
+                  ? content.Destination.price
+                  : "-"}
               </div>
             </div>
           </div>
@@ -177,7 +225,9 @@ export default function MyBookingPage() {
                 Destination :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content.Destination?.name || "-"}
+                {content && content.Destination
+                  ? content.Destination.name
+                  : "-"}
               </div>
             </div>
             <div>
@@ -185,7 +235,9 @@ export default function MyBookingPage() {
                 Guide :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content.Destination?.Guide?.name || "-"}
+                {content && content.Destination
+                  ? content.Destination.Guide.name
+                  : "-"}
               </div>
             </div>
             <div>
@@ -193,7 +245,7 @@ export default function MyBookingPage() {
                 Date :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content.date}
+                {content ? content.date : "-"}
               </div>
             </div>
             <div>
@@ -201,7 +253,9 @@ export default function MyBookingPage() {
                 Price :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content.Destination?.price || "-"}
+                {content && content.Destination
+                  ? content.Destination.price
+                  : "-"}
               </div>
             </div>
           </div>

@@ -32,13 +32,18 @@ export default function ConfirmBooking({
       navigate("/mybooking");
       toast.success("booking successfully");
     } catch (err) {
-      if (err.message === "Booking not available") {
-        toast.error(
-          "The selected date and destination are not available"
-        );
+      if (err.response) {
+        if (err.response.status === 400) {
+          toast.error(err.response.data.message);
+        } else {
+          toast.error(
+            "An error occurred while trying to create a booking"
+          );
+        }
       } else {
-        console.dir(err);
-        toast.error("An error occurred while booking");
+        toast.error(
+          "An error occurred while trying to create a booking"
+        );
       }
     }
   };
