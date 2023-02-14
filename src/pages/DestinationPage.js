@@ -43,9 +43,12 @@ export default function DestinationPage() {
     setDate(date);
   };
 
-  const newDate = date.toISOString().slice(0, 10);
+  const newDate = date.toLocaleDateString().slice(0, 10);
 
-  console.log(newDate);
+  console.log(
+    "newdate---------------------------",
+    newDate
+  );
   console.log(content);
 
   return (

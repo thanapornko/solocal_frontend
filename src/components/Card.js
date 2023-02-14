@@ -1,14 +1,11 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import tao from "../images/tao.jpg";
-// import cnx from "../images/cnx.jpg";
-// import bkk from "../images/bkk.jpg";
-// import { useParams } from "react-router-dom";
 import * as destinationApi from "../api/destination-api";
 
 export default function Card() {
-  // const params = useParams();
   const [content, setContent] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -18,9 +15,11 @@ export default function Card() {
     fetchContent();
   }, []);
 
-  {
-    /* places=[{id, name, description}] */
-  }
+  const handleClick = (e, el) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    navigate(`/destinations/${el.id}`);
+  };
 
   return (
     <div className="flex justify-around ">
@@ -28,6 +27,8 @@ export default function Card() {
       {content.map(el => (
         <Link
           to={`/destinations/${el.id}`}
+          key={el.id}
+          onClick={e => handleClick(e, el)}
           className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-1/3 ">
           <div>
             <img

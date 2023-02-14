@@ -28,9 +28,9 @@ export default function ConfirmBooking({
       e.preventDefault();
 
       await bookingApi.createBooking(input);
-      setOpen(false);
-      navigate("/mybooking");
       toast.success("booking successfully");
+      navigate("/mybooking");
+      window.scrollTo(0, 0);
     } catch (err) {
       if (err.response) {
         if (err.response.status === 400) {
@@ -45,6 +45,8 @@ export default function ConfirmBooking({
           "An error occurred while trying to create a booking"
         );
       }
+    } finally {
+      setOpen(false);
     }
   };
 

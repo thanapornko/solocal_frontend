@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
 import useAuth from "../hooks/useAuth";
 import profile from "../images/profile.jpg";
 import * as bookingApi from "../api/booking-api";
@@ -13,19 +12,49 @@ export default function MyBookingPage() {
   const [content, setContent] = useState({});
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
-  // const [name, setName] = useState("");
+  const [name, setName] = useState("");
+
+  // console.log("auth ---- ", authenticatedUser.name);
+
+  // useEffect(() => {
+  //   setName(authenticatedUser.name);
+  // }, [authenticatedUser.name]);
 
   // const handleChangeName = async e => {
-  //   try {
-  //     e.preventDefault();
-  //     await userApi.updateUserName(name);
-  //     toast.success("Name successfully updated!");
-  //   } catch (err) {
-  //     console.log(err);
-  //     toast.error(err.response?.data.message);
-  //   }
+  //   setName(e.target.value);
+  // };
+  // try {
+  //   e.preventDefault();
+  //   await userApi.updateUserName(name);
+  //   toast.success("Name successfully updated!");
+  // } catch (err) {
+  //   console.error(err);
+  //   toast.error(
+  //     err.response?.data.message ||
+  //       "Failed to update name."
+  //   );
+  // }
   // };
 
+  // const handleClickSave = async () => {
+  //   try {
+  //     // convert => multipart form data
+  //     const formData = new FormData();
+  //     // method append เพิ่มkey
+  //     formData.append("profileImage", file);
+  //     // ชื่อ key, file
+  //     await updateProfile(formData);
+  //     await userApi.updateUserName({ name });
+  //     toast.success("successfully updated!");
+  //     setEdit(!edit);
+  //     window.scrollTo(0, 0);
+  //   } catch (err) {
+  //     toast.error(
+  //       err.response?.data.message || "Failed to update"
+  //     );
+  //   }
+  // };
+  // console.log("---------------name", name);
   const handleClickSave = async () => {
     // convert => multipart form data
     const formData = new FormData();
@@ -34,6 +63,7 @@ export default function MyBookingPage() {
     // ชื่อ key, file
     await updateProfile(formData);
     setEdit(!edit);
+    window.scrollTo(0, 0);
   };
   //////////////////////////////////////////
   const fetchBookingId = async userId => {
@@ -49,8 +79,12 @@ export default function MyBookingPage() {
   const handleCancelBooking = async () => {
     const userId = authenticatedUser.id;
     const bookingId = await fetchBookingId(userId);
-    if (!bookingId) {
-      toast.error("Cannot fetch booking ID.");
+
+    const result = window.confirm(
+      "Are you sure to cancel this booking?"
+    );
+    if (!result) {
+      console.log("Booking cancellation canceled");
       return;
     }
 
@@ -60,8 +94,9 @@ export default function MyBookingPage() {
         "The booking was successfully cancelled"
       );
       navigate("/");
+      window.scrollTo(0, 0);
     } catch (error) {
-      toast.error("Cannot cancel booking");
+      console.log(error);
     }
   };
 
@@ -75,13 +110,21 @@ export default function MyBookingPage() {
     };
     fetchContent();
   }, []);
-  console.log(content);
+  // console.log(content);
+
+  ///////////////////////////////
+  const date =
+    content && content.date
+      ? new Date(
+          content.date.toLocaleString()
+        ).toLocaleDateString()
+      : "-";
 
   return (
     <>
       {edit ? (
         ////////////////////////////
-        <div className="p-10 w-1/2 border shadow-xl rounded-lg mx-auto mt-20 mb-20">
+        <div className="p-10 w-1/2 border shadow-xl rounded-lg mx-auto my-10">
           <h1 className="text-center text-zinc-900 text-4xl font-black font-display mb-10">
             MY BOOKING
           </h1>
@@ -118,16 +161,19 @@ export default function MyBookingPage() {
           <div className="my-5">
             <div>
               <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
-                name :
+                Name :
               </p>
-              <input
+              <div className="text-xl font-regular text-zinc-500 font-display my-3">
+                {authenticatedUser.name}
+              </div>
+              {/* <input
                 type="text"
                 id="name"
-                // value={name}
-                // onChange={e => setName(e.target.value)}
+                value={name}
+                // onChange={e => handleChangeName(e)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
                 placeholder={authenticatedUser.name}
-              />
+              /> */}
             </div>
             <div>
               <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
@@ -162,7 +208,7 @@ export default function MyBookingPage() {
                 Date :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content ? content.date : "-"}
+                {date}
               </div>
             </div>
             <div>
@@ -180,21 +226,25 @@ export default function MyBookingPage() {
             <button
               edit="true"
               onClick={handleClickSave}
-              // onClick={() => setEdit(!edit)}
-              className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 hover:bg-green-500 rounded-3xl w-1/3 p-3 m-auto mt-5">
+              className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 hover:bg-green-500 rounded-3xl w-1/3 p-3 m-auto mt-5 m-3">
               Save
             </button>
             <button
               edit="true"
+              onClick={() => setEdit(false)}
+              className="text-center text-slate-100 text-xl font-bold font-display bg-gray-600 hover:bg-gray-500 rounded-3xl w-1/3 p-3 m-auto mt-5 m-3">
+              Cancel
+            </button>
+            <button
+              edit="true"
               onClick={handleCancelBooking}
-              // onClick={() => setEdit(!edit)}
-              className="text-center text-slate-100 text-xl font-bold font-display bg-red-600 hover:bg-red-500 rounded-3xl w-1/3 p-3 m-auto mt-5">
+              className="text-center text-slate-100 text-xl font-bold font-display bg-red-600 hover:bg-red-500 rounded-3xl w-1/3 p-3 m-auto mt-5 m-3">
               Cancel Booking
             </button>
           </div>
         </div>
       ) : (
-        <div className="p-10 w-1/2 border shadow-xl rounded-lg mx-auto mt-20 mb-20">
+        <div className="p-10 w-1/2 border shadow-xl rounded-lg mx-auto my-10">
           <h1 className="text-center text-zinc-900 text-4xl font-black font-display mb-10">
             MY BOOKING
           </h1>
@@ -206,7 +256,7 @@ export default function MyBookingPage() {
           <div className="my-5">
             <div>
               <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
-                name :
+                Name :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
                 {authenticatedUser.name}
@@ -245,7 +295,7 @@ export default function MyBookingPage() {
                 Date :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content ? content.date : "-"}
+                {date}
               </div>
             </div>
             <div>
@@ -268,6 +318,14 @@ export default function MyBookingPage() {
             </button>
           </div>
         </div>
+      )}
+      {content && content.Destination ? (
+        <div className="p-5 border shadow-xl text-slate-100 bg-green-500 font-bold font-display rounded-lg mx-auto mb-20">
+          Your booking is complete. We'll contact you via
+          email as soon as possible.
+        </div>
+      ) : (
+        ""
       )}
     </>
   );
