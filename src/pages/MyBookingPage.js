@@ -16,13 +16,15 @@ export default function MyBookingPage() {
 
   // console.log("auth ---- ", authenticatedUser.name);
 
-  // useEffect(() => {
-  //   setName(authenticatedUser.name);
-  // }, [authenticatedUser.name]);
+  useEffect(() => {
+    if (!name) {
+      setName(authenticatedUser.name);
+    }
+  }, [authenticatedUser.name]);
 
-  // const handleChangeName = async e => {
-  //   setName(e.target.value);
-  // };
+  const handleChangeName = async e => {
+    setName(e.target.value);
+  };
   // try {
   //   e.preventDefault();
   //   await userApi.updateUserName(name);
@@ -36,35 +38,36 @@ export default function MyBookingPage() {
   // }
   // };
 
-  // const handleClickSave = async () => {
-  //   try {
-  //     // convert => multipart form data
-  //     const formData = new FormData();
-  //     // method append เพิ่มkey
-  //     formData.append("profileImage", file);
-  //     // ชื่อ key, file
-  //     await updateProfile(formData);
-  //     await userApi.updateUserName({ name });
-  //     toast.success("successfully updated!");
-  //     setEdit(!edit);
-  //     window.scrollTo(0, 0);
-  //   } catch (err) {
-  //     toast.error(
-  //       err.response?.data.message || "Failed to update"
-  //     );
-  //   }
-  // };
-  // console.log("---------------name", name);
   const handleClickSave = async () => {
-    // convert => multipart form data
-    const formData = new FormData();
-    // method append เพิ่มkey
-    formData.append("profileImage", file);
-    // ชื่อ key, file
-    await updateProfile(formData);
-    setEdit(!edit);
-    window.scrollTo(0, 0);
+    try {
+      // convert => multipart form data
+      const formData = new FormData();
+      // method append เพิ่มkey
+      formData.append("profileImage", file);
+      // ชื่อ key, file
+      await updateProfile(formData);
+      await userApi.updateUserName({ name });
+      toast.success("successfully updated!");
+      setEdit(!edit);
+      window.scrollTo(0, 0);
+    } catch (err) {
+      toast.error(
+        err.response?.data.message || "Failed to update"
+      );
+    }
   };
+  console.log("---------------name", name);
+
+  // const handleClickSave = async () => {
+  //   // convert => multipart form data
+  //   const formData = new FormData();
+  //   // method append เพิ่มkey
+  //   formData.append("profileImage", file);
+  //   // ชื่อ key, file
+  //   await updateProfile(formData);
+  //   setEdit(!edit);
+  //   window.scrollTo(0, 0);
+  // };
   //////////////////////////////////////////
   const fetchBookingId = async userId => {
     try {
@@ -163,17 +166,17 @@ export default function MyBookingPage() {
               <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
                 Name :
               </p>
-              <div className="text-xl font-regular text-zinc-500 font-display my-3">
+              {/* <div className="text-xl font-regular text-zinc-500 font-display my-3">
                 {authenticatedUser.name}
-              </div>
-              {/* <input
+              </div> */}
+              <input
                 type="text"
                 id="name"
                 value={name}
-                // onChange={e => handleChangeName(e)}
+                onChange={e => handleChangeName(e)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
                 placeholder={authenticatedUser.name}
-              /> */}
+              />
             </div>
             <div>
               <p className="text-2xl font-semibold text-zinc-900 font-display my-3">
@@ -259,7 +262,8 @@ export default function MyBookingPage() {
                 Name :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {authenticatedUser.name}
+                {/* {authenticatedUser.name} */}
+                {name}
               </div>
             </div>
             <div>
