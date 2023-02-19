@@ -1,5 +1,5 @@
 import Card from "../components/Card";
-// import Carousel from "../components/Carousel";
+import Carousel from "../components/Carousel";
 
 export default function HomePage() {
   return (
@@ -19,7 +19,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      {/* <Carousel /> */}
+      <Carousel />
       <div className="p-20">
         <Card />
       </div>

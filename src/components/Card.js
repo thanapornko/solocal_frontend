@@ -11,6 +11,10 @@ export default function Card() {
     const fetchContent = async () => {
       const res = await destinationApi.addAllDestination();
       setContent(res.data.destinations);
+      console.log(
+        "res-------------------------data",
+        res.data
+      );
     };
     fetchContent();
   }, []);

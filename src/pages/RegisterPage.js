@@ -101,7 +101,7 @@ export default function RegisterPage() {
                     Password
                   </label>
                   <input
-                    type="password"
+                    // type="password"
                     name="password"
                     value={input.password}
                     onChange={handleChangeInput}
@@ -119,7 +119,7 @@ export default function RegisterPage() {
                     Confirm password
                   </label>
                   <input
-                    type="confirmPassword"
+                    type="password"
                     name="confirmPassword"
                     value={input.confirmPassword}
                     onChange={handleChangeInput}

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "react-toastify/dist/ReactToastify.css";
+import "tw-elements";
 // import "@fortawesome/fontawesome-free/css/all.min.css";
 import App from "./App";
 import AuthContextProvider from "./contexts/AuthContext";
