@@ -43,7 +43,7 @@ export default function Navbar() {
           </li>
           {!authenticatedUser ? (
             <li className="mr-3">
-              <a
+              <button
                 className="text-slate-100 hover:text-neutral-400 text-xl font-bold font-display "
                 show="false">
                 <p
@@ -53,17 +53,17 @@ export default function Navbar() {
                   }}>
                   LOGIN
                 </p>
-              </a>
+              </button>
             </li>
           ) : (
             <li className="mr-2">
-              <a
+              <button
                 className="text-slate-100 hover:text-neutral-400 text-xl font-bold font-display "
                 show="false">
                 <p className="mx=4" onClick={logout}>
                   LOGOUT
                 </p>
-              </a>
+              </button>
             </li>
           )}
           {!authenticatedUser ? (

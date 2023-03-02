@@ -25,18 +25,6 @@ export default function MyBookingPage() {
   const handleChangeName = async e => {
     setName(e.target.value);
   };
-  // try {
-  //   e.preventDefault();
-  //   await userApi.updateUserName(name);
-  //   toast.success("Name successfully updated!");
-  // } catch (err) {
-  //   console.error(err);
-  //   toast.error(
-  //     err.response?.data.message ||
-  //       "Failed to update name."
-  //   );
-  // }
-  // };
 
   const handleClickSave = async () => {
     try {
@@ -58,16 +46,6 @@ export default function MyBookingPage() {
   };
   console.log("---------------name", name);
 
-  // const handleClickSave = async () => {
-  //   // convert => multipart form data
-  //   const formData = new FormData();
-  //   // method append เพิ่มkey
-  //   formData.append("profileImage", file);
-  //   // ชื่อ key, file
-  //   await updateProfile(formData);
-  //   setEdit(!edit);
-  //   window.scrollTo(0, 0);
-  // };
   //////////////////////////////////////////
   const fetchBookingId = async userId => {
     try {
@@ -137,7 +115,7 @@ export default function MyBookingPage() {
                 src={
                   file
                     ? URL.createObjectURL(file)
-                    : authenticatedUser.profileImage ||
+                    : authenticatedUser.profilePicture ||
                       profile
                 }
                 // แปลงเป็นลิ้ง
