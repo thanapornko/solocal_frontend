@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function ConfirmBooking({
   newDate,
-  content
+  content,
+  guideId
 }) {
   const { authenticatedUser } = useAuth();
   const { open, setOpen } = useConfirm();
@@ -20,9 +21,11 @@ export default function ConfirmBooking({
 
   const input = {
     destinationId: params.destinationId,
+    guideId: guideId,
     date: newDate
   };
 
+  console.log(guideId);
   const handleSubmitBooking = async e => {
     try {
       e.preventDefault();
@@ -49,6 +52,12 @@ export default function ConfirmBooking({
       setOpen(false);
     }
   };
+  console.log(authenticatedUser, "--AuthConfirmBooking");
+  console.log(content, "--contentConfirmBooking");
+  // console.log(
+  //   content?.Guides[guideId]?.name,
+  //   "--IDDDcontentConfirmBooking"
+  // );
 
   return (
     <>
@@ -70,9 +79,9 @@ export default function ConfirmBooking({
                   Name :{" "}
                 </h2>
                 <h2
-                  value={authenticatedUser.name}
+                  value={authenticatedUser?.name}
                   className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  {authenticatedUser.name}
+                  {authenticatedUser?.name}
                 </h2>
               </div>
               <div className="mb-2 block">
@@ -80,7 +89,7 @@ export default function ConfirmBooking({
                   Email :{" "}
                 </span>
                 <span className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  {authenticatedUser.email}
+                  {authenticatedUser?.email}
                 </span>
               </div>
               <div className="mb-2 block">
@@ -90,9 +99,9 @@ export default function ConfirmBooking({
                   Destination :{" "}
                 </span>
                 <span
-                  value={content.name}
+                  value={content?.name}
                   className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  {content.name}
+                  {content?.name}
                 </span>
               </div>
               <div className="mb-2 block">
@@ -100,7 +109,7 @@ export default function ConfirmBooking({
                   Guide name :{" "}
                 </span>
                 <span className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  {content.Guide.name}
+                  {/* {content?.Guides[guideId]?.name} */}
                 </span>
               </div>
               <div className="mb-2 block">
@@ -120,7 +129,7 @@ export default function ConfirmBooking({
                   Price :{" "}
                 </span>
                 <span className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  {content.price}
+                  {content?.price}
                 </span>
               </div>
             </div>

@@ -33,7 +33,7 @@ export default function Card() {
           to={`/destinations/${el.id}`}
           key={el.id}
           onClick={e => handleClick(e, el)}
-          className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-1/3 ">
+          className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-1/3 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-100">
           <div>
             <img
               className="rounded-t-lg"

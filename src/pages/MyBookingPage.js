@@ -81,17 +81,21 @@ export default function MyBookingPage() {
     }
   };
 
+  console.log(authenticatedUser.profileImage, "pic");
+
   ///////////////////////////////
   useEffect(() => {
     const fetchContent = async () => {
       const res = await bookingApi.getBooking(
         authenticatedUser.id
       );
+
       setContent(res.data.booking);
     };
     fetchContent();
   }, []);
-  // console.log(content);
+
+  console.log(authenticatedUser, "--content mybooking");
 
   ///////////////////////////////
   const date =
@@ -115,14 +119,9 @@ export default function MyBookingPage() {
                 src={
                   file
                     ? URL.createObjectURL(file)
-                    : authenticatedUser.profilePicture ||
+                    : authenticatedUser.profileImage ||
                       profile
                 }
-                // แปลงเป็นลิ้ง
-                // {
-                //   authenticatedUser.profileImage ||
-                //   profile
-                // }
                 className="h-60 w-60 rounded-full m-auto border-4 mb-5"
               />
               <input
@@ -153,7 +152,7 @@ export default function MyBookingPage() {
                 value={name}
                 onChange={e => handleChangeName(e)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
-                placeholder={authenticatedUser.name}
+                placeholder={authenticatedUser?.name}
               />
             </div>
             <div>
@@ -161,7 +160,7 @@ export default function MyBookingPage() {
                 Email :
               </p>
               <div className="text-1xl font-regular text-zinc-500 font-display my-3">
-                {authenticatedUser.email}
+                {authenticatedUser?.email}
               </div>
             </div>
             <div>
@@ -169,8 +168,10 @@ export default function MyBookingPage() {
                 Destination :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content && content.Destination
-                  ? content.Destination.name
+                {content &&
+                content.Guide &&
+                content.Guide.Destination
+                  ? content.Guide.Destination.name
                   : "-"}
               </div>
             </div>
@@ -179,8 +180,8 @@ export default function MyBookingPage() {
                 Guide :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content && content.Destination
-                  ? content.Destination.Guide.name
+                {content && content.Guide
+                  ? content.Guide?.name
                   : "-"}
               </div>
             </div>
@@ -197,8 +198,8 @@ export default function MyBookingPage() {
                 Price :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content && content.Destination
-                  ? content.Destination.price
+                {content && content.Guide
+                  ? content.Guide?.Destination.price
                   : "-"}
               </div>
             </div>
@@ -230,9 +231,9 @@ export default function MyBookingPage() {
             MY BOOKING
           </h1>
           <img
-            src={authenticatedUser.profileImage || profile}
+            src={authenticatedUser?.profileImage || profile}
             className="h-60 w-60 rounded-full m-auto border-4 mb-10"
-            alt="blackwidow"
+            alt="profile"
           />
           <div className="my-5">
             <div>
@@ -249,7 +250,7 @@ export default function MyBookingPage() {
                 Email :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {authenticatedUser.email}
+                {authenticatedUser?.email}
               </div>
             </div>
             <div>
@@ -257,8 +258,10 @@ export default function MyBookingPage() {
                 Destination :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content && content.Destination
-                  ? content.Destination.name
+                {content &&
+                content.Guide &&
+                content.Guide.Destination
+                  ? content.Guide.Destination.name
                   : "-"}
               </div>
             </div>
@@ -267,8 +270,8 @@ export default function MyBookingPage() {
                 Guide :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content && content.Destination
-                  ? content.Destination.Guide.name
+                {content && content.Guide
+                  ? content.Guide?.name
                   : "-"}
               </div>
             </div>
@@ -285,8 +288,8 @@ export default function MyBookingPage() {
                 Price :
               </p>
               <div className="text-xl font-regular text-zinc-500 font-display my-3">
-                {content && content.Destination
-                  ? content.Destination.price
+                {content && content.Guide
+                  ? content.Guide.Destination.price
                   : "-"}
               </div>
             </div>
@@ -301,14 +304,14 @@ export default function MyBookingPage() {
           </div>
         </div>
       )}
-      {content && content.Destination ? (
+      {/* {content && content.Destination ? (
         <div className="p-5 border shadow-xl text-slate-100 bg-green-500 font-bold font-display rounded-lg mx-auto mb-20">
           Your booking is complete. We'll contact you via
           email as soon as possible.
         </div>
       ) : (
         ""
-      )}
+      )} */}
     </>
   );
 }

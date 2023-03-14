@@ -19,9 +19,9 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <Carousel />
       <div className="p-20">
-        <Card />
+        <Card className="" />
+        <Carousel />
       </div>
     </>
   );
