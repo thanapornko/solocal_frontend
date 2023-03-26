@@ -13,6 +13,7 @@ import CnxPage from "../pages/CnxPage";
 
 import Layout from "../layouts/Layout";
 import ProtectedRoute from "../features/auth/ProtectedRoute";
+import AdminProtectedRoute from "../features/auth/AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -38,38 +39,38 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <AdminPage />
+        element: (
+          <AdminProtectedRoute>
+            <AdminPage />
+          </AdminProtectedRoute>
+        )
       },
       {
         path: "/admin/bkk",
-        element: <BkkPage />
+        element: (
+          <AdminProtectedRoute>
+            <BkkPage />
+          </AdminProtectedRoute>
+        )
       },
       {
         path: "/admin/tao",
-        element: <TaoPage />
+        element: (
+          <AdminProtectedRoute>
+            <TaoPage />
+          </AdminProtectedRoute>
+        )
       },
       {
         path: "/admin/cnx",
-        element: <CnxPage />
+        element: (
+          <AdminProtectedRoute>
+            <CnxPage />
+          </AdminProtectedRoute>
+        )
       }
     ]
   }
-  // {
-  //   path: "/",
-  //   element: (
-  //     <Layout>
-  //       <HomePage />
-  //     </Layout>
-  //   )
-  // },
-  // {
-  //   path: "/destinations",
-  //   element: <DestinationPage />
-  // },
-  // {
-  //   path: "/mybooking",
-  //   element: <MyBookingPage />
-  // }
 ]);
 
 export default function Router() {

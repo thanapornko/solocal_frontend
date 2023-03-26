@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import solocal from "../images/solocal.png";
 import useLayout from "../hooks/useLayout";
 import useAuth from "../hooks/useAuth";
@@ -7,20 +9,26 @@ import profile from "../images/profile.jpg";
 export default function Navbar() {
   const { setShow, show } = useLayout();
   const { authenticatedUser, logout } = useAuth();
+  const navigate = useNavigate();
 
+  const clickLogout = () => {
+    logout();
+    navigate("/");
+  };
   return (
     <>
       <ul className="flex p-2 bg-zinc-900 justify-between content-center">
         <div className="flex items-center pl-5">
           <li className="mr-1">
             <Link
-              to="/"
+              to={authenticatedUser?.isAdmin ? "#" : "/"}
               className="text-slate-100 text-3xl font-bold font-display">
               <p>SOLOCAL</p>
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link
+              to={authenticatedUser?.isAdmin ? "#" : "/"}>
               <img
                 src={solocal}
                 className="h-14"
@@ -31,7 +39,8 @@ export default function Navbar() {
         </div>
         <div className="flex items-center">
           <li className="mr-6">
-            {!authenticatedUser ? (
+            {!authenticatedUser ||
+            authenticatedUser?.isAdmin === true ? (
               ""
             ) : (
               <Link
@@ -60,13 +69,15 @@ export default function Navbar() {
               <button
                 className="text-slate-100 hover:text-neutral-400 text-xl font-bold font-display "
                 show="false">
-                <p className="mx=4" onClick={logout}>
+                <p className="mx=4" onClick={clickLogout}>
                   LOGOUT
                 </p>
               </button>
             </li>
           )}
           {!authenticatedUser ? (
+            ""
+          ) : authenticatedUser.isAdmin ? (
             ""
           ) : (
             <li className="mr-5">

@@ -129,12 +129,13 @@ export default function DestinationPage() {
                   <p className="text-center text-stone-300 text-xl font-black font-display mb-5">
                     SELECT DATE
                   </p>
-
-                  <Calendar
-                    className="mb-5"
-                    onChange={onChange}
-                    value={date}
-                  />
+                  <div className="flex">
+                    <Calendar
+                      className="m-auto mb-5"
+                      onChange={onChange}
+                      value={date}
+                    />
+                  </div>
                   <div className="flex">
                     <button
                       onClick={() =>

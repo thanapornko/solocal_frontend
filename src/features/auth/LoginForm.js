@@ -5,6 +5,7 @@ import {
   TextInput
 } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
@@ -14,6 +15,7 @@ export default function LoginForm() {
   const { login, authenticatedUser } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const { setShow } = useLayout();
 
@@ -22,13 +24,18 @@ export default function LoginForm() {
       e.preventDefault();
       await login(email, password);
       toast.success("Welcome");
+      console.log("authenticatedUser:", authenticatedUser);
+      console.log("email:", email);
+      if (email === "admin@gmail.com") {
+        console.log("Redirecting to /admin");
+        navigate("/admin");
+      }
       setShow(false);
     } catch (err) {
       console.log(err);
       toast.error(err.response?.data.message);
     }
   };
-
   return (
     <Modal.Body>
       <div className=" space-y-10 px-6 pb-4 m-auto ">
