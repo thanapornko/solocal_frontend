@@ -1,7 +1,7 @@
 import { Modal, Button } from "flowbite-react";
+
 import useAuth from "../../hooks/useAuth";
 import useConfirm from "../../hooks/useConfirm";
-import { useState } from "react";
 import * as bookingApi from "../../api/booking-api";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -10,11 +10,11 @@ import { useNavigate } from "react-router-dom";
 export default function ConfirmBooking({
   newDate,
   content,
-  guideId
+  guideId,
+  guideName
 }) {
   const { authenticatedUser } = useAuth();
   const { open, setOpen } = useConfirm();
-  // const [input, setInput] = useState({});
   const navigate = useNavigate();
 
   const params = useParams();
@@ -25,7 +25,6 @@ export default function ConfirmBooking({
     date: newDate
   };
 
-  console.log(guideId);
   const handleSubmitBooking = async e => {
     try {
       e.preventDefault();
@@ -52,12 +51,6 @@ export default function ConfirmBooking({
       setOpen(false);
     }
   };
-  console.log(authenticatedUser, "--AuthConfirmBooking");
-  console.log(content, "--contentConfirmBooking");
-  // console.log(
-  //   content?.Guides[guideId]?.name,
-  //   "--IDDDcontentConfirmBooking"
-  // );
 
   return (
     <>
@@ -109,7 +102,7 @@ export default function ConfirmBooking({
                   Guide name :{" "}
                 </span>
                 <span className="block mb-2 text-base font-medium text-gray-400 font-display">
-                  {/* {content?.Guides[guideId]?.name} */}
+                  {guideName}
                 </span>
               </div>
               <div className="mb-2 block">
@@ -133,6 +126,7 @@ export default function ConfirmBooking({
                 </span>
               </div>
             </div>
+
             <Button
               type="submit"
               onClick={handleSubmitBooking}

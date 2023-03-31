@@ -14,20 +14,23 @@ export default function DestinationPage() {
   const { authenticatedUser } = useAuth();
   const { open, setOpen } = useConfirm();
   const [guideId, setGuideId] = useState("");
+  const [guideName, setGuideName] = useState("");
   const [date, setDate] = useState(new Date());
 
   const params = useParams();
   // { dddd: '1111', eeee: '7777' }
   const [content, setContent] = useState({ Guide: {} });
 
-  const handleOnClickForm = guideId => {
+  const handleOnClickForm = (guideId, guideName) => {
     console.log(authenticatedUser?.name);
     if (!authenticatedUser) {
       return toast.error("Please login");
     }
     setOpen(!open);
     setGuideId(guideId);
+    setGuideName(guideName);
   };
+  console.log(guideName);
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -63,6 +66,7 @@ export default function DestinationPage() {
           newDate={newDate}
           content={content}
           guideId={guideId}
+          guideName={guideName}
         />
       )}
       <div className="py-10 px-20">
@@ -139,7 +143,10 @@ export default function DestinationPage() {
                   <div className="flex">
                     <button
                       onClick={() =>
-                        handleOnClickForm(guide.id)
+                        handleOnClickForm(
+                          guide.id,
+                          guide.name
+                        )
                       }
                       className="text-center text-slate-100 text-xl font-bold font-display bg-green-600 hover:bg-green-500  rounded-3xl w-2/3 p-3 m-auto">
                       Let's Go

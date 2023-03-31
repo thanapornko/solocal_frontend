@@ -304,14 +304,14 @@ export default function MyBookingPage() {
           </div>
         </div>
       )}
-      {/* {content && content.Destination ? (
+      {content && content.Guide ? (
         <div className="p-5 border shadow-xl text-slate-100 bg-green-500 font-bold font-display rounded-lg mx-auto mb-20">
           Your booking is complete. We'll contact you via
           email as soon as possible.
         </div>
       ) : (
         ""
-      )} */}
+      )}
     </>
   );
 }
